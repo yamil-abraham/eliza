@@ -1,4 +1,4 @@
-ARG NODE_VER=23.5.0
+ARG NODE_VER=23.3.0
 ARG BASE_IMAGE=node:${NODE_VER}
 FROM $BASE_IMAGE
 
@@ -13,6 +13,7 @@ RUN apt-get update \
     g++ \
     nano \
     vim \
+    build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,4 +22,9 @@ RUN npm install -g pnpm@${PNPM_VER}
 
 # Set Python 3 as the default python
 RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Configure pnpm for better compatibility with ARM64
+RUN pnpm config set registry https://registry.npmjs.org/
+RUN pnpm config set node-linker hoisted
+
 ENV DEBIAN_FRONTEND=dialog
