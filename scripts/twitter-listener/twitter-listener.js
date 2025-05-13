@@ -122,9 +122,10 @@ async function checkForNewTweets() {
       log('No tweets found');
       return;
     }
-    
+    interactWithChatGPT(latestTweet.text);
     // If this is the first check or we have a new tweet
     if (!lastTweetId || latestTweet.id !== lastTweetId) {
+      interactWithChatGPT(latestTweet.text);
       if (lastTweetId) { // Only process if not the first run
         log(`New tweet detected: "${latestTweet.text}"`);
         
@@ -135,7 +136,7 @@ async function checkForNewTweets() {
           log(`Tweet does not match keywords, skipping retweet`);
         }
       }
-      interactWithChatGPT(latestTweet.text);
+      
       lastTweetId = latestTweet.id;
     } else {
       log('No new tweets');
