@@ -16,11 +16,55 @@ const config = {
   logFile: process.env.TWITTER_LOG_FILE || path.join(__dirname, 'twitter-listener.log')
 };
 
+
+
 // Validate configuration
 if (!config.username || !config.password || !config.targetAccount) {
   console.error('Error: TWITTER_USERNAME, TWITTER_PASSWORD, and TWITTER_TARGET_ACCOUNT environment variables are required');
   process.exit(1);
 }
+
+
+const { OpenAI } = require("openai");
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+async function interactWithChatGPT(tweet) {
+    log("Interacting with ChatGPT...");
+    try {
+        const completion = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo", // O el modelo de ChatGPT que desees usar
+            messages: [
+                {
+                    role: "system",
+                    content:
+                        "Eres experto en finanzas, analizas tweets y responde de forma concisa.",
+                },
+                {
+                    role: "user",
+                    content: `Analiza el siguiente tweet y responde dando tu opinion:\n\n${tweet}`,
+                },
+            ],
+            max_tokens: 150, // Ajusta según la longitud deseada de la respuesta
+        });
+
+        if (completion.choices && completion.choices.length > 0) {
+            console.log(
+                "Respuesta de ChatGPT:",
+                completion.choices[0].message.content.trim()
+            );
+        } else {
+            console.log("No se recibió una respuesta válida de ChatGPT.");
+        }
+    } catch (error) {
+        console.error("Error al interactuar con ChatGPT:", error);
+    }
+}
+
+// Ejemplo de uso:
+//const tweetRecibido =
+//    "Acabo de probar una receta nueva y quedó deliciosa. ¡Recomendaciones para la próxima?";
+// interactWithChatGPT(tweetRecibido);
 
 // Setup logging
 function log(message) {
@@ -78,9 +122,10 @@ async function checkForNewTweets() {
       log('No tweets found');
       return;
     }
-    
+    interactWithChatGPT(latestTweet.text);
     // If this is the first check or we have a new tweet
     if (!lastTweetId || latestTweet.id !== lastTweetId) {
+      interactWithChatGPT(latestTweet.text);
       if (lastTweetId) { // Only process if not the first run
         log(`New tweet detected: "${latestTweet.text}"`);
         
@@ -103,6 +148,7 @@ async function checkForNewTweets() {
 
 // Check if a tweet should be retweeted based on keywords
 function shouldRetweet(tweetText) {
+  
   if (!config.retweetKeywords || config.retweetKeywords.length === 0) {
     log('No keywords specified, will retweet all tweets');
     return true; // Retweet everything if no keywords specified
@@ -172,3 +218,4 @@ main().catch(error => {
   log(`Unhandled error: ${error.message}`);
   process.exit(1);
 });
+

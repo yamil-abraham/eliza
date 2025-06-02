@@ -9,8 +9,9 @@ services:
             - /var/run/tappd.sock:/var/run/tappd.sock
             - eliza:/app/packages/client-twitter/src/tweetcache
             - eliza:/app/db.sqlite
+        env_file:
+            - .env
         environment:
-            - OPENAI_API_KEY=
             - REDPILL_API_KEY=
             - ELEVENLABS_XI_API_KEY=
             - ELEVENLABS_MODEL_ID=eleven_multilingual_v2
@@ -22,9 +23,6 @@ services:
             - ELEVENLABS_OPTIMIZE_STREAMING_LATENCY=4
             - ELEVENLABS_OUTPUT_FORMAT=pcm_16000
             - TWITTER_DRY_RUN=false
-            - TWITTER_USERNAME=
-            - TWITTER_PASSWORD=
-            - TWITTER_EMAIL=
             - BIRDEYE_API_KEY=
             - SOL_ADDRESS=So11111111111111111111111111111111111111112
             - SLIPPAGE=1
@@ -36,6 +34,7 @@ services:
         ports:
             - "3000:3000"
             - "5173:5173"
+            - "5174:5174"
         restart: always
 
 volumes:
