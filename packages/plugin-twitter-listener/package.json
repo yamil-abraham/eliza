@@ -1,0 +1,16 @@
+{
+  "name": "@eliza/plugin-twitter-listener",
+  "version": "0.1.0",
+  "description": "Twitter listener plugin for elizaOS",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "agent-twitter-client": "^0.0.18"
+  },
+  "peerDependencies": {
+    "@elizaos/agent": "*"
+  }
+}
