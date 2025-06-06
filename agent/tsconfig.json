@@ -5,7 +5,14 @@
         "rootDir": ".",
         "module": "ESNext",
         "moduleResolution": "Bundler",
-        "types": ["node", "jest"]
+        "types": ["node", "jest"],
+        "paths": {
+      // Asegúrate de que este nombre coincida EXACTAMENTE con el nombre de tu plugin en su package.json
+      "@elizaos-plugins/eliza-twitter-monitor-plugin": [
+        "../plugins/eliza-twitter-monitor-plugin/src", // Path to the plugin's source files (for types)
+        "../plugins/eliza-twitter-monitor-plugin/dist"  // Path to the plugin's compiled output (also for types)
+      ]
+    },
     },
     "ts-node": {
         "experimentalSpecifierResolution": "node",

@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "target": "es2021", // Or es2022, esnext
+      "module": "NodeNext", // <-- CHANGE THIS to NodeNext, ESNext, or similar
+      "moduleResolution": "NodeNext", // <-- Also set this for modern Node.js resolution
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "declaration": true
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+  }

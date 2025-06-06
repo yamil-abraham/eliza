@@ -1,0 +1,32 @@
+{
+  "name": "@elizaos-plugins/eliza-twitter-monitor-plugin",
+  "version": "1.0.0",
+  "description": "ElizaOS plugin to monitor a Twitter account for new posts.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "elizaos",
+    "plugin",
+    "twitter",
+    "monitor",
+    "new post"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "dependencies": {
+    "@elizaos/plugin-openai": "0.25.6-alpha.1",
+    "@elizaos/plugin-twitter": "0.25.6-alpha.1",
+    "agent-twitter-client": "0.0.18",
+    "@elizaos/core": "workspace:*",
+    "dotenv": "^16.x.x",
+    "openai": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x.x",
+    "typescript": "^5.x.x"
+  }
+}
